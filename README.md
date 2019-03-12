@@ -59,4 +59,4 @@ other A   T   G   G   C   A   G   C   C
       0   1   2   3   4   *   5   6   7
 ```
 
-Thus, the joining process is similar to an `SQL LEFT JOIN` where instead of tables, there are alignments and instead of joining a column, alignments are joined on a common sequence.
+Thus, the joining process is similar to an `SQL LEFT JOIN` where instead of tables, there are alignments and instead of joining on a particular column, alignments are joined through a common sequence.
