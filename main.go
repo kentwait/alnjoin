@@ -8,6 +8,8 @@ import (
 	aln "github.com/kentwait/conspos/alignment"
 )
 
+var version = "undefined"
+
 // Exists returns whether the given file or directory Exists or not,
 // and accompanying errors.
 func Exists(path string) (bool, error) {
@@ -88,7 +90,7 @@ func main() {
 	}
 
 	// Join alignments
-	joinedAln := leftJoin(aln1, aln2, found1, found2)
+	joinedAln := LeftJoin(aln1, aln2, found1, found2)
 	// print to stdout
 	fmt.Println(aln.ToString(joinedAln))
 
