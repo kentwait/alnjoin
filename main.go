@@ -8,7 +8,7 @@ import (
 	aln "github.com/kentwait/conspos/alignment"
 )
 
-var version = "undefined"
+var VERSION = "undefined"
 
 // Exists returns whether the given file or directory Exists or not,
 // and accompanying errors.
@@ -23,13 +23,28 @@ func Exists(path string) (bool, error) {
 	return true, err
 }
 
+func init() {
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "%s version %s\n", os.Args[0], VERSION)
+		fmt.Fprintln(os.Stderr, "usage:")
+		flag.PrintDefaults()
+	}
+}
+
 func main() {
 	aln1Ptr := flag.String("aln1", "", "Path to first alignment (required)")
 	aln2Ptr := flag.String("aln2", "", "Path to second alignment (required)")
 	aln1RefNamePtr := flag.String("ref1", "", "Sequence name/identifier of sequence in aln1 to join on  (required)")
 	aln2RefNamePtr := flag.String("ref2", "", "Sequence name/identifier of sequence in aln2 to join on (required)")
+	versionPtr := flag.Bool("version", false, "Shows the version")
 
 	flag.Parse()
+
+	// Prints version and exits
+	if *versionPtr == true {
+		fmt.Println(VERSION)
+		os.Exit(0)
+	}
 
 	// Check arguments
 	var missingArgs bool
