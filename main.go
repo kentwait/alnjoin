@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 
 	fa "github.com/kentwait/gofasta"
 )
@@ -36,6 +37,7 @@ func main() {
 	aln2Ptr := flag.String("aln2", "", "Path to second alignment (required)")
 	aln1RefNamePtr := flag.String("ref1", "", "Sequence name/identifier of sequence in aln1 to join on  (required)")
 	aln2RefNamePtr := flag.String("ref2", "", "Sequence name/identifier of sequence in aln2 to join on (required)")
+	methodPtr := flag.String("method", "left", "Join method {left|right} (default: left)")
 	versionPtr := flag.Bool("version", false, "Shows the version")
 
 	flag.Parse()
@@ -105,7 +107,16 @@ func main() {
 	}
 
 	// Join alignments
-	joinedAln := LeftJoin(aln1, aln2, found1, found2)
+	var joinedAln fa.Alignment
+	if strings.ToLower(*methodPtr) == "left" {
+		joinedAln = LeftJoin(aln1, aln2, found1, found2)
+	} else if strings.ToLower(*methodPtr) == "right" {
+		joinedAln = RightJoin(aln1, aln2, found1, found2)
+	} else {
+		os.Stderr.WriteString(fmt.Sprintf("[Error!] %q is not a valid method.\n", *aln2RefNamePtr))
+		flag.Usage()
+		os.Exit(1)
+	}
 	// print to stdout
 	fmt.Printf("%#v\n", joinedAln.ToFasta())
 
