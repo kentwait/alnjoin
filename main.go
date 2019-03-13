@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	aln "github.com/kentwait/conspos/alignment"
+	fa "github.com/kentwait/gofasta"
 )
 
 var VERSION = "undefined"
@@ -81,7 +81,7 @@ func main() {
 	}
 
 	// Read fasta files and check if ref names exist
-	aln1 := FastaToAlignment(*aln1Ptr)
+	aln1 := fa.FastaFileToAlignment(*aln1Ptr)
 	found1 := -1
 	found2 := -1
 	for i, seq := range aln1 {
@@ -93,7 +93,7 @@ func main() {
 		os.Stderr.WriteString(fmt.Sprintf("[Error!] %q was not found among the sequence identifiers in the first alignment.\n", *aln1RefNamePtr))
 		os.Exit(1)
 	}
-	aln2 := FastaToAlignment(*aln2Ptr)
+	aln2 := fa.FastaFileToAlignment(*aln2Ptr)
 	for i, seq := range aln2 {
 		if *aln2RefNamePtr == seq.ID() {
 			found2 = i
@@ -107,6 +107,6 @@ func main() {
 	// Join alignments
 	joinedAln := LeftJoin(aln1, aln2, found1, found2)
 	// print to stdout
-	fmt.Println(aln.ToString(joinedAln))
+	fmt.Printf("%#v\n", joinedAln.ToFasta())
 
 }

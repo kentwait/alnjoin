@@ -3,12 +3,11 @@ package main
 import (
 	"fmt"
 
-	aln "github.com/kentwait/conspos/alignment"
-	"github.com/kentwait/conspos/sequence"
+	fa "github.com/kentwait/gofasta"
 )
 
 // LeftJoin joins 2 alignments using a common sequence similar to an SQL LEFT JOIN.
-func LeftJoin(aln1, aln2 aln.Alignment, refindex1, refindex2 int) aln.Alignment {
+func LeftJoin(aln1, aln2 fa.Alignment, refindex1, refindex2 int) fa.Alignment {
 	ref1UngappedSlice := aln1[refindex1].UngappedPositionSlice("-")
 	ref2UngappedSlice := aln2[refindex2].UngappedPositionSlice("-")
 
@@ -16,7 +15,7 @@ func LeftJoin(aln1, aln2 aln.Alignment, refindex1, refindex2 int) aln.Alignment 
 	ref2Rune := []rune(aln2[refindex2].Sequence())
 
 	// Initialize empty slice
-	emptyAln := make([]sequence.Sequence, len(aln2)-1)
+	emptyAln := make([]fa.Sequence, len(aln2)-1)
 	i := 0
 	for idx2, seq := range aln2 {
 		if idx2 == refindex2 {
@@ -42,7 +41,7 @@ func LeftJoin(aln1, aln2 aln.Alignment, refindex1, refindex2 int) aln.Alignment 
 			}
 			j++
 		}
-		emptyAln[i] = sequence.NewCharSequence(seq.ID(), seq.Title(), string(newRunedSeq))
+		emptyAln[i] = fa.NewCharSequence(seq.ID(), seq.Description(), string(newRunedSeq))
 		i++
 	}
 	joinedAln := append(aln1, emptyAln...)
