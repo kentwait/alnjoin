@@ -81,7 +81,7 @@ func main() {
 	}
 
 	// Read fasta files and check if ref names exist
-	aln1 := fa.FastaFileToAlignment(*aln1Ptr)
+	aln1 := fa.FastaFileToCharAlignment(*aln1Ptr)
 	found1 := -1
 	found2 := -1
 	for i, seq := range aln1 {
@@ -93,7 +93,7 @@ func main() {
 		os.Stderr.WriteString(fmt.Sprintf("[Error!] %q was not found among the sequence identifiers in the first alignment.\n", *aln1RefNamePtr))
 		os.Exit(1)
 	}
-	aln2 := fa.FastaFileToAlignment(*aln2Ptr)
+	aln2 := fa.FastaFileToCharAlignment(*aln2Ptr)
 	for i, seq := range aln2 {
 		if *aln2RefNamePtr == seq.ID() {
 			found2 = i
