@@ -1,5 +1,8 @@
 # alnjoin
 
+[![Build Status](https://travis-ci.org/kentwait/alnjoin.svg?branch=master)](https://travis-ci.org/kentwait/alnjoin)
+[![Coverage Status](https://coveralls.io/repos/github/kentwait/alnjoin/badge.svg?branch=master)](https://coveralls.io/github/kentwait/alnjoin?branch=master)
+
 Merge 2 multiple sequence alignments that share a common sequence.
 
 ## Usage
